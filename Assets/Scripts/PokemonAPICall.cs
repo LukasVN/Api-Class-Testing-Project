@@ -8,7 +8,7 @@ public class PokemonAPICall : MonoBehaviour
 {
     public string pokemon;
     
-
+    // SimpleJSON Need to be added
     void Start()
     {
         //Api call to a Json
