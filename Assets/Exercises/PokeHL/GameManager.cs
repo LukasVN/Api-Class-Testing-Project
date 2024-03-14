@@ -38,11 +38,13 @@ public class GameManager : MonoBehaviour
                 //Handle lose
                 Debug.Log("YOU LOSE");
             }
+            
         }
+
     }
 
     public void SetButtonsState(){
-        
+
     }
 
 
