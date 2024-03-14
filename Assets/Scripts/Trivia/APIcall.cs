@@ -53,8 +53,18 @@ public class APIcall : MonoBehaviour
 
                     Questions questions = JsonUtility.FromJson<Questions>(webRequest.downloadHandler.text);
 
-                    Debug.Log(questions.results[0].question);
-                    
+                    foreach (Question question in questions.results)
+                    {
+                        TriviaManager.instance.AddQuestions(question.question);
+                    }
+
+                    TriviaManager.instance.difficulty = questions.results[0].difficulty;
+                    TriviaManager.instance.category = questions.results[0].category;
+                    TriviaManager.instance.answers.Add(questions.results[0].correct_answer);
+                    foreach (string answer in questions.results[0].incorrect_answers)
+                    {
+                        TriviaManager.instance.answers.Add(answer);
+                    }
                     break;
             }
         }
