@@ -8,21 +8,31 @@ using UnityEngine.UI;
 
 public class APIConsumer : MonoBehaviour
 {
+    public static APIConsumer instance;
     private string pokemon;
-    private float weight;
+    // private float weight;
     private float height;
     private string pokemonID;
-    public Image pokemonSprite;
+    public Image leftPokemonSprite;
+    public Image rightPokemonSprite;
     public int maxRange;
-    void Start()
-    {
-        StartCoroutine(GetRandomPokemonCoroutine());
-        //StartCoroutine(GetPokemonDataCoroutine());
-        //StartCoroutine(GetPokemonImageCoroutine());
+    private void Awake() {
+        instance = this;
     }
 
+    void Start()
+    {
+        StartCoroutine(GetRandomPokemonCoroutine(leftPokemonSprite));
+        StartCoroutine(GetRandomPokemonCoroutine(rightPokemonSprite));
+    }
 
-    IEnumerator GetRandomPokemonCoroutine()
+    public void NextRound(){
+        StartCoroutine(GetRandomPokemonCoroutine(leftPokemonSprite));
+        StartCoroutine(GetRandomPokemonCoroutine(rightPokemonSprite));
+    }
+    
+
+    IEnumerator GetRandomPokemonCoroutine(Image pokemonSprite)
     {
         string apiUrl = "https://pokeapi.co/api/v2/pokemon?limit="+maxRange;
         UnityWebRequest request = UnityWebRequest.Get(apiUrl);
@@ -36,7 +46,7 @@ public class APIConsumer : MonoBehaviour
             string value = N["results"][Random.Range(0,maxRange+1)]["name"].Value; // Assuming 'key' exists in your JSON
             Debug.Log(value);
             pokemon = value;
-            StartCoroutine(GetPokemonDataCoroutine());
+            StartCoroutine(GetPokemonDataCoroutine(pokemonSprite));
         }
         else
         {
@@ -44,7 +54,7 @@ public class APIConsumer : MonoBehaviour
         }
     }
 
-    IEnumerator GetPokemonDataCoroutine()
+    IEnumerator GetPokemonDataCoroutine(Image pokemonSprite)
     {
         string apiUrl = "https://pokeapi.co/api/v2/pokemon/"+pokemon;
         UnityWebRequest request = UnityWebRequest.Get(apiUrl);
@@ -55,17 +65,14 @@ public class APIConsumer : MonoBehaviour
             var N = JSON.Parse(request.downloadHandler.text);
             Debug.Log(N.ToString());
             // Now you can access your data dynamically. For example:
-            string weightSTR = N["weight"].Value; // Assuming 'key' exists in your JSON
+            // string weightSTR = N["weight"].Value; // Assuming 'key' exists in your JSON
             string heightSTR = N["height"].Value;
             string pokemonIDSTR = N["id"].Value;
             pokemonID = pokemonIDSTR;
-            weight = float.Parse(weightSTR)/10;
+            // weight = float.Parse(weightSTR)/10;
             height = float.Parse(heightSTR)/10;
-            Debug.Log("ID API CALL: "+pokemonIDSTR);
-            Debug.Log("ID: "+pokemonID);
-            Debug.Log("Weight: "+weightSTR);
-            Debug.Log("Height: "+heightSTR);
-            StartCoroutine(GetPokemonImageCoroutine());
+            StartCoroutine(GetPokemonImageCoroutine(pokemonSprite));
+            GameManager.instance.pokemonHeights.Add(height);
         }
         else
         {
@@ -73,7 +80,7 @@ public class APIConsumer : MonoBehaviour
         }
     }
 
-    IEnumerator GetPokemonImageCoroutine()
+    IEnumerator GetPokemonImageCoroutine(Image pokemonSprite)
     {
         string apiUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+pokemonID+".png";
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(apiUrl);
