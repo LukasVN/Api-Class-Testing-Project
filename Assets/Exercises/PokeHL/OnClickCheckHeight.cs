@@ -8,5 +8,6 @@ public class OnClickCheckHeight : MonoBehaviour
 
     public void CheckHeightButton(){
         GameManager.instance.CheckPokemonHeight(comparisonType);
+        GameManager.instance.SetButtonsState(false);
     }
 }

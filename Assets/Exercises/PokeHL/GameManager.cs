@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class GameManager : MonoBehaviour
     public List<float> pokemonHeights;
     public GameObject[] buttons;
     public bool canPrint = false;
-    private bool printed = false;
     private int score;
+    private bool isGameOver;
     private void Awake() {
         instance = this;
     }
@@ -21,30 +22,37 @@ public class GameManager : MonoBehaviour
             if(pokemonHeights[0] >= pokemonHeights[1]){
                 score++;
                 scoreText.text = ""+score;
-                APIConsumer.instance.NextRound();
+                pokemonHeights.Clear();
+                APIConsumer.instance.NextRound();               
             }
             else{
-                //Handle lose
                 Debug.Log("YOU LOSE");
+                SetButtonsState(false);
+                isGameOver = true;
             }
         }
         else if(comparisonType.Equals("Smaller")){
             if(pokemonHeights[0] <= pokemonHeights[1]){
                 score++;
                 scoreText.text = ""+score;
+                pokemonHeights.Clear();
                 APIConsumer.instance.NextRound();
             }
             else{
-                //Handle lose
                 Debug.Log("YOU LOSE");
+                SetButtonsState(false);
+                isGameOver = true;
             }
             
         }
 
     }
 
-    public void SetButtonsState(){
-
+    public void SetButtonsState(bool state){
+        foreach (GameObject item in buttons)
+        {
+            item.SetActive(state);
+        }
     }
 
 

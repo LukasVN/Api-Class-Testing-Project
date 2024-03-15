@@ -23,15 +23,27 @@ public class APIConsumer : MonoBehaviour
     void Start()
     {
         StartCoroutine(GetRandomPokemonCoroutine(leftPokemonSprite));
-        StartCoroutine(GetRandomPokemonCoroutine(rightPokemonSprite));
+        Invoke("Delay",0.5f);
+    }
+    private void Update() {
+        if(leftPokemonSprite.sprite != null && rightPokemonSprite.sprite != null){
+            leftPokemonSprite.gameObject.SetActive(true); rightPokemonSprite.gameObject.SetActive(true);
+            GameManager.instance.SetButtonsState(true);
+        }
+        else{
+            leftPokemonSprite.gameObject.SetActive(false); rightPokemonSprite.gameObject.SetActive(false);
+        }
     }
 
     public void NextRound(){
+        leftPokemonSprite.sprite = null; rightPokemonSprite.sprite = null;
         StartCoroutine(GetRandomPokemonCoroutine(leftPokemonSprite));
-        StartCoroutine(GetRandomPokemonCoroutine(rightPokemonSprite));
+        Invoke("Delay",0.5f);
     }
     
-
+    private void Delay(){
+        StartCoroutine(GetRandomPokemonCoroutine(rightPokemonSprite));
+    }
     IEnumerator GetRandomPokemonCoroutine(Image pokemonSprite)
     {
         string apiUrl = "https://pokeapi.co/api/v2/pokemon?limit="+maxRange;
