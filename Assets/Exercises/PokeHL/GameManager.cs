@@ -10,15 +10,19 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public List<float> pokemonHeights;
     public GameObject[] buttons;
+    public GameObject gameOverText;
     public bool canPrint = false;
     private int score;
-    private bool isGameOver;
+    public bool isGameOver {get;set;}
     private void Awake() {
         instance = this;
     }
 
 private void Update() {
-    
+    if(isGameOver){
+        gameOverText.SetActive(true);
+        SetButtonsState(false);
+    }
 }
     public void CheckPokemonHeight(string comparisonType){
         if(comparisonType.Equals("Taller")){
