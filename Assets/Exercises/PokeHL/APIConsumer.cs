@@ -16,6 +16,7 @@ public class APIConsumer : MonoBehaviour
     public Image leftPokemonSprite;
     public Image rightPokemonSprite;
     public int maxRange;
+    
     private void Awake() {
         instance = this;
     }
@@ -25,6 +26,7 @@ public class APIConsumer : MonoBehaviour
         StartCoroutine(GetRandomPokemonCoroutine(leftPokemonSprite));
         Invoke("Delay",0.5f);
     }
+
     private void Update() {
         if(leftPokemonSprite.sprite != null && rightPokemonSprite.sprite != null){
             leftPokemonSprite.gameObject.SetActive(true); rightPokemonSprite.gameObject.SetActive(true);
@@ -44,6 +46,7 @@ public class APIConsumer : MonoBehaviour
     private void Delay(){
         StartCoroutine(GetRandomPokemonCoroutine(rightPokemonSprite));
     }
+
     IEnumerator GetRandomPokemonCoroutine(Image pokemonSprite)
     {
         string apiUrl = "https://pokeapi.co/api/v2/pokemon?limit="+maxRange;

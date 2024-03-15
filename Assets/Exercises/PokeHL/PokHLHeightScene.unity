@@ -1830,7 +1830,7 @@ MonoBehaviour:
   buttons:
   - {fileID: 1874109998}
   - {fileID: 441041956}
-  gameOverText: {fileID: 0}
+  gameOverText: {fileID: 512037812}
   canPrint: 0
 --- !u!1 &1617640699
 GameObject:
