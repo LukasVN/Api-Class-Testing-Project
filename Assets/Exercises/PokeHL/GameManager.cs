@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
+private void Update() {
+    
+}
     public void CheckPokemonHeight(string comparisonType){
         if(comparisonType.Equals("Taller")){
             if(pokemonHeights[0] >= pokemonHeights[1]){
@@ -27,7 +30,6 @@ public class GameManager : MonoBehaviour
             }
             else{
                 Debug.Log("YOU LOSE");
-                SetButtonsState(false);
                 isGameOver = true;
             }
         }
@@ -40,7 +42,6 @@ public class GameManager : MonoBehaviour
             }
             else{
                 Debug.Log("YOU LOSE");
-                SetButtonsState(false);
                 isGameOver = true;
             }
             
