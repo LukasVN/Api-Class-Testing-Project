@@ -210,7 +210,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &441041957
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1411,7 +1411,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1272739538}
   pokemonHeights: []
-  buttons: []
+  buttons:
+  - {fileID: 1874109998}
+  - {fileID: 441041956}
   canPrint: 0
 --- !u!1 &1617640699
 GameObject:
@@ -1507,7 +1509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1874109999
 RectTransform:
   m_ObjectHideFlags: 0
